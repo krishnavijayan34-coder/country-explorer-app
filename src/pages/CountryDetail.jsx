@@ -17,9 +17,9 @@ function CountryDetail(){
     if (!country) return <Typography>Loading...</Typography>;
     return(
         <Container>
-            <button onClick={()=>navigate(-1)}>
+            <Button variant="contained" onClick={()=>navigate(-1)}>
               Back
-            </button>
+            </Button>
             <img src={country?.flags?.png} width="200"/>
             <Typography variant="h4">{country.name.common}</Typography>
             <Typography>
