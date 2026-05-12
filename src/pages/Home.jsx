@@ -10,7 +10,7 @@ function Home(){
     const [region,setRegion]=useState("");
     const [loading,setLoading]=useState(true);
     const [error,setError]=useState("");
-    const [favourites,setfavourites]=useState(
+    const [favourites,Setfavourites]=useState(
         JSON.parse(localStorage.getItem("fav")) || []
     );
     const BASE_URL = useContext(ApiContext);
