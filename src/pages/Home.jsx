@@ -8,7 +8,7 @@ function Home(){
     const [region,setRegion]=useState("");
     const [loading,setLoading]=useState(true);
     const [error,setError]=useState("");
-    const [favourites,Setfavourities]=useState(
+    const [favourites,Setfavourites]=useState(
         JSON.parse(localStorage.getItem("fav")) || []
     );
     useEffect(()=>{
@@ -27,7 +27,7 @@ function Home(){
 
     const toggleFav =(name)=>{
         let updated =favourites.includes(name)? favourites.filter((c)=>c!==name):[...favourites,name];
-        Setfavourities(updated);
+        Setfavourites(updated);
         localStorage.setItem("fav",JSON.stringify(updated));
     };
     
@@ -38,7 +38,7 @@ function Home(){
         return matchSearch && matchRegion;
     });
     if (loading) return <CircularProgress sx={{m:5}}/>;
-    if (error) return <Typography>{error}</Typography> 
+    if (error) return <Typography>{error}</Typography> ;
         return(
             <Container>
                 <Typography variant="h4" sx={{my:3}}>Country Explorer</Typography>
@@ -56,7 +56,7 @@ function Home(){
                     
                 </Box>
                 <Grid container spacing={2}>
-                    {filteredCountries.map((country,index)=>(
+                    {filteredCountries.map((country)=>(
                         <Grid  xs={12} sm={6} md={4} key={country?.name?.common}>
                             <CountryCard country={country} favourites={favourites} toggleFav={toggleFav}/>
                             </Grid>
