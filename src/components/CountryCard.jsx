@@ -1,5 +1,6 @@
 import { Button, Card,CardContent,CardMedia,Typography} from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 function CountryCard({country,favourites,toggleFav}){
     const navigate =useNavigate();
     return(
@@ -10,7 +11,7 @@ function CountryCard({country,favourites,toggleFav}){
             <CardContent>
                 <Typography variant="h6">{country.name.common}</Typography>
                 <Typography variant="body2">Region:{country?.region}</Typography>
-                <Typography variant="body2">Population:{country?.population.toLocaleString()}
+                <Typography variant="body2">Population:{country?.population?.toLocaleString()}
                 </Typography>
             </CardContent>
             </div>
@@ -26,4 +27,4 @@ function CountryCard({country,favourites,toggleFav}){
     );
 
 }
-export default CountryCard;
+export default React.memo(CountryCard);

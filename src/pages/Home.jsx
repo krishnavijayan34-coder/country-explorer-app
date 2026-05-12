@@ -1,7 +1,9 @@
-import {useEffect,useState } from "react";
+import {useEffect,useState,useCallback ,useContext} from "react";
 import axios from "axios";
 import{Box, TextField, MenuItem, Grid, Container, Typography,CircularProgress} from "@mui/material"
 import CountryCard from "../components/CountryCard";
+import { ApiContext } from "../api/ApiContext";
+
 function Home(){
     const [countries,setCountries]=useState([]);
     const [search,setSearch]=useState("");
@@ -11,12 +13,14 @@ function Home(){
     const [favourites,Setfavourites]=useState(
         JSON.parse(localStorage.getItem("fav")) || []
     );
+    const BASE_URL = useContext(ApiContext);
     useEffect(()=>{
         fetchCountries();
     },[]);
+    
     const fetchCountries=async()=>{
         try{
-        const response =await axios.get("https://restcountries.com/v3.1/all?fields=name,flags,population,region");
+        const response =await axios.get(`${BASE_URL}/all?fields=name,flags,population,region`);
         setCountries(response.data);
         }catch(err){
             setError("Failed to load countries ")
@@ -25,11 +29,11 @@ function Home(){
         }
     };
 
-    const toggleFav =(name)=>{
+    const toggleFav =useCallback((name)=>{
         let updated =favourites.includes(name)? favourites.filter((c)=>c!==name):[...favourites,name];
         Setfavourites(updated);
         localStorage.setItem("fav",JSON.stringify(updated));
-    };
+    },[favourites]);
     
     const filteredCountries=countries.filter((country)=>{
         const matchSearch=country.name.common

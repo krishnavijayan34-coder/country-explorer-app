@@ -1,15 +1,16 @@
-import { useEffect,useState } from "react";
+import { useEffect,useState ,useContext} from "react";
 import axios from "axios";
 import { useNavigate,useParams } from "react-router-dom";
 import { Container,Typography,Button } from "@mui/material";
-
+import { ApiContext } from "../api/ApiContext";
 function CountryDetail(){
     const {name}=useParams();
     const navigate = useNavigate();
     const [country,setCountry]=useState(null);
+    const BASE_URL =useContext(ApiContext);
     useEffect(()=>{
         
-       axios.get(`https://restcountries.com/v3.1/name/${name}`)
+       axios.get(`${BASE_URL}/name/${name}`)
         .then((res)=>setCountry(res.data[0]))
         .catch((err)=>console.log(err));
         
@@ -20,7 +21,7 @@ function CountryDetail(){
             <Button variant="contained" onClick={()=>navigate(-1)}>
               Back
             </Button>
-            <img src={country?.flags?.png} width="200"/>
+            <img src={country?.flags?.png} width="200" alt={country.name.common}/>
             <Typography variant="h4">{country.name.common}</Typography>
             <Typography>
                 Capital:{country.capital?.[0]}
